@@ -1,0 +1,113 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+/*
+Variavel de formatação
+*/
+:root {
+    --cor1: #00FF00;
+    --cor2: #52FF52;
+    --cor3: #32E632;
+    --cor4: #99034E;
+    --cor5: #E6328C;
+
+    --fonte-destaque: 'Press Start 2P', cursive;
+    --fonte-tema: 'Titillium Web', sans-serif;
+}
+
+/* Formatação Global */
+* {
+    padding: 0px;
+    margin: 0px;
+    
+}
+
+body {
+    background: linear-gradient(to bottom, var(--cor1), var(--cor3));
+    height: 1vh;
+    font-family: var(--fonte-tema);
+    font-size: 1em;
+}
+
+
+main {
+    border: 4px solid var(--cor2);
+    padding: 25px;
+    max-width: 900px;
+    margin: 10px auto auto auto;
+    background-color: white;
+    border-radius: 10px;
+}
+
+main h1 {
+    text-align: center;
+    color: var(--cor5);
+    margin: -10px auto 20px auto;
+    text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.158);
+}
+
+main > div#load_jogo {
+    text-align: center;
+    padding: 5px;
+}
+
+main  a.botao {
+    background-color: var(--cor4);
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background ease-in-out 0.8s;
+    font-family: var(--fonte-destaque);
+}
+
+main  a.botao:hover {
+    background-color: #57002b;
+}
+
+main a.botao_exit {
+    padding: 10px;
+    background-color: red;
+}
+
+/* Formatão dos status que mostra os pontos */
+div#informacao {
+    margin: -25px -25px 10px -25px;
+    padding: 25px;
+    width: 100%;
+    background-color: var(--cor2);
+    color: white;
+    text-align: right;
+    font-family: var(--fonte-destaque);
+    font-size: 1.2em;
+}
+
+/* Formatação da partes dos cartões */
+
+div#game {
+    padding: 10px;
+}
+
+div#game > div#card_list div.card {
+    display: inline-block;
+    min-width: 100px;
+    min-height: 200px;
+    border: 2px solid rgba(0, 0, 0, 0.158);
+    margin: 4px;
+    padding: 10px;
+    background: url('../imagens/lampada.png') no-repeat;
+    background-position: center;
+    background-size: 100px 100px;
+    text-align: center;
+}
+
+div#game > div#card_list div.card:hover {
+    background-color: #cecece;
+    cursor: pointer;
+}
+
+footer {
+    padding: 10px;
+    text-align: center;
+    color: white;
+}

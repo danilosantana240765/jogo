@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main>
+        <h1>Cardroom</h1>
+        <!-- Primeira parte -->
+        <div id="load_jogo">
+            <a href="game.html"  class="botao">Iniciar Game</a>
+            <!-- tag temporaria -->
+            <audio id="audio_fundo"></audio>
+        </div>
+    </main>
+    <script>
+        // Script para carregar o audio
+        let audio = document.getElementById("audio_fundo");
+        let source;
+        // Da um play no audio assim que carregar toda a página
+        window.onload = function(){
+            // Adiciona o arquivo de audio
+            source = document.createElement("source");
+            source.setAttribute("src", "audio/Float.mp3");
+            source.setAttribute("type", "audio/mpeg");
+            audio.appendChild(source);
+            this.playAudio();
+        }
+
+        // Funcao para da um play do audio
+        function playAudio(){
+            audio.play();
+            audio.loop = true; // Loop do audio
+            audio.constrols = false; // Ocultar o play
+        }
+    </script>
+    <script src="js/script.js"></script>
+    <footer>
+        <p>Copyright &copy; - 2020. Danilo Santana & Jackson Silva</p>
+    </footer>
+</body>
+</html>
