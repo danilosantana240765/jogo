@@ -11,32 +11,18 @@
         <h1>Cardroom</h1>
         <!-- Primeira parte -->
         <div id="load_jogo">
-            <a href="game.html"  class="botao">Iniciar Game</a>
+            <a href="#" id="init_game" class="botao">Iniciar Game</a>
             <!-- tag temporaria -->
             <audio id="audio_fundo"></audio>
         </div>
+        <div id="load_option">
+            <a href="#" alt="Gerar uma partida nova">Criar uma nova partida</a>
+            <form action="game.html" method="post">
+                <input type="text" name="code" id="codID" placeholder="Entre com o código da partida"/>
+                <input type="submit" value="Participar"/>
+            </form>
+        </div>
     </main>
-    <script>
-        // Script para carregar o audio
-        let audio = document.getElementById("audio_fundo");
-        let source;
-        // Da um play no audio assim que carregar toda a página
-        window.onload = function(){
-            // Adiciona o arquivo de audio
-            source = document.createElement("source");
-            source.setAttribute("src", "audio/Float.mp3");
-            source.setAttribute("type", "audio/mpeg");
-            audio.appendChild(source);
-            this.playAudio();
-        }
-
-        // Funcao para da um play do audio
-        function playAudio(){
-            audio.play();
-            audio.loop = true; // Loop do audio
-            audio.constrols = false; // Ocultar o play
-        }
-    </script>
     <script src="js/script.js"></script>
     <footer>
         <p>Copyright &copy; - 2020. Danilo Santana & Jackson Silva</p>

@@ -1,6 +1,24 @@
 let div_game = document.getElementById("game");
 let div_cards = document.getElementsByClassName("card");
-let audio;
+let audio = document.getElementById("audio_fundo");
+let source;
+
+// Da um play no audio assim que carregar toda a página
+if(audio != null){
+    // Adiciona o arquivo de audio
+    source = document.createElement("source");
+    source.setAttribute("src", "audio/Float.mp3");
+    source.setAttribute("type", "audio/mpeg");
+    audio.appendChild(source);
+    this.playAudio();
+}
+
+// Funcao para da um play do audio
+function playAudio(){
+    audio.play();
+    audio.loop = true; // Loop do audio
+    audio.constrols = false; // Ocultar o play
+}
 
 // Verificando se essa tag foi carregado
 if(div_cards != null){
@@ -28,11 +46,17 @@ function audioEfeito(){
     let source = document.createElement("source");
     source.setAttribute("src", "audio/Small_Glass_Pane_Shatter.mp3");
     source.setAttribute("type", "audio/mpeg");
-
     audio.appendChild(source);
 
     // Configurando o audio
     audio.controls = false;
     audio.loop = false;
     audio.play();
+}
+
+/* Manipanando o botao de  iniciar o game */
+document.getElementById("init_game").onclick = function(){
+    playAudio();
+    let div_option = document.getElementById("load_option");
+    div_option.style.display = "block";
 }
