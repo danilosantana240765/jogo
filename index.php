@@ -1,3 +1,7 @@
+<?php
+    require_once("config.php");
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,8 +21,8 @@
             <audio id="audio_fundo"></audio>
         </div>
         <div id="load_option">
-            <a href="#" alt="Gerar uma partida nova">Criar uma nova partida</a>
-            <form action="game.html" method="post">
+            <a href="gerar_sala.php" alt="Gerar uma partida nova">Criar uma nova partida</a>
+            <form action="game.php" method="GET">
                 <input type="text" name="code" id="codID" placeholder="Entre com o código da partida"/>
                 <input type="submit" value="Participar"/>
             </form>
