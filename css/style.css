@@ -39,6 +39,17 @@ main {
     border-radius: 10px;
 }
 
+main div#logo {
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(0,0,0,.5);
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    background: url('../imagens/cartas-de-jogar-ace-branco-bokeh-de-fundo_1017-20653.jpg') no-repeat;
+    background-size: 100px 100px;
+}
+
 main h1 {
     text-align: center;
     color: var(--cor5);
