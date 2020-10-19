@@ -1,5 +1,6 @@
 <?php
 require_once("config.php");
+require_once("include". DIRECTORY_SEPARATOR . "funcoes.php");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,37 +13,42 @@ require_once("config.php");
 <body>
     <main>
         <?php
+         
+
+            // Mostrando o status do jogo
+            echo "<div id=\"informacao\">
+                    <span>Code: {$_SESSION['sala']} <span> | <span>Pontos: 10</span>
+                </div>";
             
-            $hash = $_GET['code'] ?? null;
-
-            if(!is_null($hash)){
-                $sql = "select hash from tb_sala where hash = '$hash' limit 1";
-                $stmt = $conn->query($sql);
-                if(!$stmt){
-                    echo "<p>Houver um problema ao pesquisa pelo hash</p>";
-                } else if($stmt->num_rows == 0){
-                    echo "<p>Nenhuma hash encontrada :(</p>";
-                } else {
-                    $reg = $stmt->fetch_object();
-
-                    // Mostrando o status do jogo
-                    echo "<div id=\"informacao\">
-                            <span>Code: {$reg->hash} <span> | <span>Pontos: 10</span>
-                        </div>";
-                    
-                    // Buscando pela perguntas
-                    
-                    // Mostrando a lista de cartas
-                    echo ' <div id="game"><div id="card_list">';
-                        for($i = 1; $i <= 5; $i++){
-                            echo "<div id=\"card{$i}\" class=\"card\">Carta {$i}</div>";
-                        }
-                    echo '</div></div>';
+            // Buscando pela perguntas
+            $sql = "select cod_pergunta, pergunta, img_representacao from tb_pergunta";
+            $stmt = $conn->query($sql);
+            
+            if(!$stmt) {
+                echo "Houver um erro ao se conectar com o banco de dados {$conn->error}";
+            } else if($stmt->num_rows == 0){
+                echo "Nenhuma pergunta cadastrada!";
+            }else {
+                // Pegando todos as linhas e jogando dentro de um array
+                $array_questao = array();
+                while($rows = $stmt->fetch_assoc()){
+                    array_push($array_questao, $rows);
                 }
-            } else {
-                echo "<p>Por favor informe o codigo da jogada!</p>";
+
+                // Realizando o sorteio das perguntas
+                $array_questao_sorteada = array();
+                $array_questao_sorteada = sortear($array_questao);
+                // Mostrando a lista de cartas
+                echo ' <div id="game"><div id="card_list">';
+                echo "<script> let questoes = ".json_encode($array_questao_sorteada) . "</script>";
+                    for($i = 0; $i < $stmt->num_rows; $i++){
+                        echo "<div id=\"card{$i}\" class=\"card\">Carta ". ($i + 1) ."</div>";
+                    }
+                echo '</div></div>';
             }
+        
         ?>
+        <div id="load_questao"></div>
         <!-- Segunda Parte -->
 
         <div id="load_efeito"></div>

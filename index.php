@@ -20,10 +20,17 @@
             <!-- tag temporaria -->
             <audio id="audio_fundo"></audio>
         </div>
+        <?php
+            if(isset($_GET['action'])){
+                require_once('user_entrar_partida.php');
+            }
+        ?>
         <div id="load_option">
+            
             <a href="gerar_sala.php" alt="Gerar uma partida nova">Criar uma nova partida</a>
-            <form action="game.php" method="GET">
+            <form action="index.php" method="GET">
                 <input type="text" name="code" id="codID" placeholder="Entre com o código da partida"/>
+                <input type="hidden"  name="action" value="action"/>
                 <input type="submit" value="Participar"/>
             </form>
         </div>

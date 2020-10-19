@@ -10,7 +10,7 @@ $sql = "INSERT INTO tb_sala (`hash`, cod_jogador_fk) values ('$codID', {$_SESSIO
 // Executando a query
 
 if($conn->query($sql)){
-    header("Location: game.php?code=$codID");
+    header("Location: user_entrar_partida.php?code=$codID");
     exit();
 } else {
     echo "Houver um problema ao preparar o ambiente. Por favor tente novamente!";

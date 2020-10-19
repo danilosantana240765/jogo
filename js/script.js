@@ -25,6 +25,8 @@ if(div_cards != null){
     for(let pos_card in div_cards){
         div_cards[pos_card].onclick = function(){
             audioEfeito();
+            if(questoes != null)
+                div_cards[pos_card].innerHTML = questoes[pos_card].pergunta;
         };
     }
 }
