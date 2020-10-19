@@ -18,6 +18,7 @@ function playAudio(){
     audio.play();
     audio.loop = true; // Loop do audio
     audio.constrols = false; // Ocultar o play
+    audio.volume = 0.2;
 }
 
 // Verificando se essa tag foi carregado
@@ -29,8 +30,10 @@ if(div_cards != null){
             show[pos_card] = !show[pos_card]
             if(questoes != null && show[pos_card]){
                 div_cards[pos_card].innerHTML = questoes[pos_card].pergunta;
+                div_cards[pos_card].style.backgroundImage = "url('imagens/lampada_acesa.png')";
             }else {
-                div_cards[pos_card].innerHTML = "Cartão " ;
+                div_cards[pos_card].innerHTML = "Cartão " + (Number(pos_card) + (Number(1)));
+                div_cards[pos_card].style.backgroundImage = "url('imagens/lampada-apagada.png')";
             }
             
         };
@@ -62,6 +65,7 @@ function audioEfeito(){
     audio.controls = false;
     audio.loop = false;
     audio.play();
+    audio.volume = 0.15;
 }
 
 /* Manipanando o botao de  iniciar o game */
