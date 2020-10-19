@@ -22,12 +22,20 @@ function playAudio(){
 
 // Verificando se essa tag foi carregado
 if(div_cards != null){
+    let show = Array();
     for(let pos_card in div_cards){
         div_cards[pos_card].onclick = function(){
             audioEfeito();
-            if(questoes != null)
+            show[pos_card] = !show[pos_card]
+            if(questoes != null && show[pos_card]){
                 div_cards[pos_card].innerHTML = questoes[pos_card].pergunta;
+            }else {
+                div_cards[pos_card].innerHTML = "Cartão " ;
+            }
+            
         };
+
+        show.push(false); // Bit de ocultar
     }
 }
 

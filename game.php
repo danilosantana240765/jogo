@@ -1,6 +1,8 @@
 <?php
 require_once("config.php");
 require_once("include". DIRECTORY_SEPARATOR . "funcoes.php");
+
+is_not_room();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,7 +15,6 @@ require_once("include". DIRECTORY_SEPARATOR . "funcoes.php");
 <body>
     <main>
         <?php
-         
 
             // Mostrando o status do jogo
             echo "<div id=\"informacao\">
@@ -52,7 +53,7 @@ require_once("include". DIRECTORY_SEPARATOR . "funcoes.php");
         <!-- Segunda Parte -->
 
         <div id="load_efeito"></div>
-        <a id="exit" class="botao botao_exit" href="index.php">Sair</a>
+        <a id="exit" class="botao botao_exit" href="logout.php">Sair</a>
     </main>
     <script src="js/script.js"></script>
     <footer>

@@ -28,3 +28,19 @@ function sortear($array = array(), $limit = 5){
 
     return $new_array;
 }
+
+// Funcao para verificar se o usuario não está na sala
+function is_not_room(){
+    if(!isset($_SESSION['sala'])){
+        header("Location: index.php");
+        exit();
+    }
+}
+
+// Funcao para verificar se o usuario esta na sala
+function is_room(){
+    if(isset($_SESSION['sala'])){
+        header("Location: game.php");
+        exit();
+    }
+}
