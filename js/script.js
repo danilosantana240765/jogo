@@ -31,9 +31,11 @@ if(div_cards != null){
             if(questoes != null && show[pos_card]){
                 div_cards[pos_card].innerHTML = questoes[pos_card].pergunta;
                 div_cards[pos_card].style.backgroundImage = "url('imagens/lampada_acesa.png')";
+                div_cards[pos_card].style.backgroundColor = "#cecece";
             }else {
                 div_cards[pos_card].innerHTML = "Cartão " + (Number(pos_card) + (Number(1)));
                 div_cards[pos_card].style.backgroundImage = "url('imagens/lampada-apagada.png')";
+                div_cards[pos_card].style.backgroundColor = "#ffffff";
             }
             
         };
