@@ -1,5 +1,9 @@
 <?php
 require_once("config.php");
+require_once("include". DIRECTORY_SEPARATOR . "funcoes.php");
+
+is_room();
+is_not_logado();
 
 // Criando um hash unica
 $codID = strtoupper(uniqid());

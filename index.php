@@ -3,6 +3,7 @@ require_once("config.php");
 require_once("include". DIRECTORY_SEPARATOR . "funcoes.php");
 
 is_room();
+is_not_logado();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

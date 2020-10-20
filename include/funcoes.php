@@ -44,3 +44,19 @@ function is_room(){
         exit();
     }
 }
+
+// Funcao que verifica se o usuario não está logado
+function is_not_logado(){
+    if(!isset($_SESSION['cod_jogador'])){
+        header("Location: login.php");
+        exit();
+    }
+}
+
+// Funcao que verifica se o usuario está logado
+function is_logado(){
+    if(isset($_SESSION['cod_jogador'])){
+        header("Location: index.php");
+        exit();
+    }
+}

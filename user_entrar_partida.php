@@ -1,5 +1,7 @@
 <?php
 require_once("config.php");
+require_once("include".DIRECTORY_SEPARATOR."funcoes.php");
+
 
 // Recebendo os paramentros da url
 $code = $_GET['code'] ?? null;
@@ -19,8 +21,32 @@ if(!is_null($code)){
             echo "Nenhum sala encontrada com <strong>". stripslashes($code). "</strong>";
         }else {
             $_SESSION['sala'] = $code;
-            header("Location: game.php");
-            exit();
+            /* Implementar os codigos que irá sortear as questoes */
+            // Buscando pela perguntas
+            $sql = "select cod_pergunta, pergunta, img_representacao from tb_pergunta";
+            $stmt = $conn->query($sql);
+            
+            if(!$stmt) {
+                echo "Houver um erro ao se conectar com o banco de dados {$conn->error}";
+            } else if($stmt->num_rows == 0){
+                echo "Nenhuma pergunta cadastrada!";
+            }else {
+                // Pegando todos as linhas e jogando dentro de um array
+                $array_questao = array();
+                while($rows = $stmt->fetch_assoc()){
+                    array_push($array_questao, $rows);
+                }
+
+                // Realizando o sorteio das perguntas
+                $_SESSION['array_questao_sorteada'] = array();
+                $_SESSION['array_questao_sorteada'] = sortear($array_questao);
+
+                header("Location: game.php");
+                exit();
+            }
+
+            header("Location: index.php?codErr=Error_sorted_question");
+            exit;
         }
     }
 }else {

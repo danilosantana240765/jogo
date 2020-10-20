@@ -1,8 +1,9 @@
 <?php
 require_once("config.php");
 require_once("include". DIRECTORY_SEPARATOR . "funcoes.php");
+require_once("include". DIRECTORY_SEPARATOR. "criptografia.php");
 
-is_room();
+is_logado()
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -20,31 +21,41 @@ is_room();
                 // Carregando o formulário de fazer login
                 $usuario = $_POST['usuario'] ?? null;
                 $senha = $_POST['senha'] ?? null;
-                // Fazendo o bloqueio de tentativa para efetura o login
-                if(!isset($_SESSION['tentativas'])){
-                    $_SESSION['tentativas'] = 0;
-                }
-
+                
                 // Verificando o dados de entrada
                 if(!is_null($usuario) && !is_null($senha)){
                     // Fazendo correção nas strings
+                    
+    
 
-                    if($_SESSION['tentativas'] < 3){
-                        $_SESSION['tentativas'] ++;
+                    // Realizando uma query para pesquisar pelo usuario
+                    $sql = "select cod_jogador, nome usuario, senha, avatar from tb_jogador where usuario = '{$usuario}' limit 1";
+                    $stmt = $conn->query($sql);
+                    // Verificando se a busca foi bem sucedida
+                    if(!$stmt){
+                        echo "Houver um problema ao tentar se conectar com o banco!";
+                    }else if($stmt->num_rows > 0) {
+                        $rows = $stmt->fetch_assoc();
+                        // verificar a senha se a senha está correta
+                        if(verificar_hash_senha($senha, $rows['senha'])){
+                            // criando a sessão do usuario
+                            foreach($rows as $key => $row){
+                                $_SESSION[$key] = $row;
+                            }
+
+                            // redirecionando o usuário para página index.php
+                            header("Location: index.php");
+                            exit;
+                        }else {
+                            echo "Senha ou usuario inválido";
+                        }
                     }else {
-                        echo "Infelizmente você errou 3 vezes seguida. Tente novamente mais tarde! ";
-                        // Guardar o tempo que o usuario ficará bloqueado
-                        if(!isset($_SESSION['minutos'])){
-                            $_SESSION['minutos'] = ((int) date("i") * 60);
-                        } 
-                        
-                        
+                        echo "Senha ou usuario inválido";
                     }
-                   
-                } else {
-                    require_once("include".DIRECTORY_SEPARATOR."form_login.php");
-                }
 
+                } 
+                require_once("include".DIRECTORY_SEPARATOR."form_login.php");
+            
                 
             ?>
         </div>
