@@ -12,6 +12,7 @@ is_logado()
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Game - Login</title>
     <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <main>
@@ -26,10 +27,10 @@ is_logado()
                 if(!is_null($usuario) && !is_null($senha)){
                     // Fazendo correção nas strings
                     
-    
+                    
 
                     // Realizando uma query para pesquisar pelo usuario
-                    $sql = "select cod_jogador, nome usuario, senha, avatar from tb_jogador where usuario = '{$usuario}' limit 1";
+                    $sql = "select cod_jogador, nome, usuario, senha, avatar from tb_jogador where usuario = '{$usuario}' limit 1";
                     $stmt = $conn->query($sql);
                     // Verificando se a busca foi bem sucedida
                     if(!$stmt){
@@ -54,9 +55,10 @@ is_logado()
                     }
 
                 } 
+
+                // Carregando os campos de login
                 require_once("include".DIRECTORY_SEPARATOR."form_login.php");
             
-                
             ?>
         </div>
     </main>
