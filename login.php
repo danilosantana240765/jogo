@@ -48,10 +48,10 @@ is_logado()
                             header("Location: index.php");
                             exit;
                         }else {
-                            echo "Senha ou usuario inválido";
+                            echo getError("Senha ou usuario inválido");
                         }
                     }else {
-                        echo "Senha ou usuario inválido";
+                        echo getError("Senha ou usuario inválido");
                     }
 
                 } 

@@ -12,6 +12,7 @@ is_not_logado();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Game</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <main>
@@ -23,6 +24,7 @@ is_not_logado();
             <!-- tag temporaria -->
             <audio id="audio_fundo"></audio>
         </div>
+        <p class='exit_conta'><a href="logout.php?action=exit_user"><span class="material-icons">exit_to_app</span> Sair da conta</a></p>
         <?php
             if(isset($_GET['action'])){
                 require_once('user_entrar_partida.php');

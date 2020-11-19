@@ -45,3 +45,10 @@ main div#logo {
     background: url('../imagens/user.png') no-repeat;
     background-size: 100% 100%;
 }
+
+.error {
+    color: white;
+    background-color: red;
+    border-radius: 10px;
+    padding: 5px;
+}

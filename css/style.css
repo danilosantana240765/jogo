@@ -92,6 +92,11 @@ main a.botao_exit {
     background-color: red;
 }
 
+.exit_conta {
+    text-align: center;
+    margin-top: 10px;
+}
+
 /* Formatão dos status que mostra os pontos */
 div#informacao {
     margin: -25px -25px 10px -25px;

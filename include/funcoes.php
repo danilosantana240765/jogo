@@ -60,3 +60,13 @@ function is_logado(){
         exit();
     }
 }
+
+// Funcao para mostrar erros pessoalizado
+function getError($string){
+    return "<p class='error'><span class='material-icons'>error_outline</span> {$string}</p>";
+}
+
+function getSucess($string){
+    return "<p class='sucess'><span class='material-icons'>check_circle_outline</span> {$string}</p>";
+}
+// end --------------------------------
