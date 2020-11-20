@@ -32,7 +32,7 @@ is_not_logado();
         ?>
         <div id="load_option">
             
-            <a href="gerar_sala.php" alt="Gerar uma partida nova">Criar uma nova partida</a>
+            <a href="gerar_sala.php" alt="Gerar uma partida nova"><span class="material-icons">control_point</span>Criar uma nova partida</a>
             <form action="index.php" method="GET">
                 <input type="text" name="code" id="codID" placeholder="Entre com o código da partida"/>
                 <input type="hidden"  name="action" value="action"/>
