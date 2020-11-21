@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19-Nov-2020 às 22:58
+-- Tempo de geração: 21-Nov-2020 às 04:13
 -- Versão do servidor: 10.4.13-MariaDB
 -- versão do PHP: 7.4.8
 
@@ -22,6 +22,17 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `cardroom` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `cardroom`;
+
+DELIMITER $$
+--
+-- Procedimentos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_acumular_ponto` (`tot` INT, `id` INT)  begin
+	update tb_jogador set tot_ponto = tot_ponto + tot where cod_jogador = id;
+    select tot_ponto from tb_jogador where cod_jogador = id;
+end$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -86,16 +97,17 @@ CREATE TABLE `tb_jogador` (
   `nome` varchar(50) NOT NULL,
   `usuario` varchar(50) NOT NULL,
   `senha` varchar(255) NOT NULL,
-  `avatar` text DEFAULT NULL
+  `avatar` text DEFAULT NULL,
+  `tot_ponto` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `tb_jogador`
 --
 
-INSERT INTO `tb_jogador` (`cod_jogador`, `nome`, `usuario`, `senha`, `avatar`) VALUES
-(1, 'Danilo Santana', 'danilosantana', 'fcea920f7412b5da7be0cf42b8c93759', NULL),
-(2, 'Jose da Silva', 'jose', 'fcea920f7412b5da7be0cf42b8c93759', NULL);
+INSERT INTO `tb_jogador` (`cod_jogador`, `nome`, `usuario`, `senha`, `avatar`, `tot_ponto`) VALUES
+(1, 'Danilo Santana', 'danilosantana', 'fcea920f7412b5da7be0cf42b8c93759', NULL, 1390),
+(2, 'Jose da Silva', 'jose', 'fcea920f7412b5da7be0cf42b8c93759', NULL, 20);
 
 -- --------------------------------------------------------
 
@@ -137,7 +149,34 @@ CREATE TABLE `tb_sala` (
 
 INSERT INTO `tb_sala` (`cod_sala`, `hash`, `data_criacao`, `cod_jogador_fk`) VALUES
 (20, '5F8F40A71B630', '2020-10-20 16:55:19', 1),
-(21, '5F92041D130C0', '2020-10-22 19:13:49', 1);
+(21, '5F92041D130C0', '2020-10-22 19:13:49', 1),
+(23, '5FB6F50D8FF87', '2020-11-19 19:43:25', 1),
+(24, '5FB6FFFC78433', '2020-11-19 20:30:04', 1),
+(32, '5FB879B4A7807', '2020-11-20 23:21:40', 1),
+(36, '5FB882402036F', '2020-11-20 23:58:08', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura stand-in para vista `v_pergunta_alternativas`
+-- (Veja abaixo para a view atual)
+--
+CREATE TABLE `v_pergunta_alternativas` (
+`cod_altenativa` int(11)
+,`altenativa` text
+,`img_representacao` text
+,`pergunta` text
+,`cod_pergunta` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para vista `v_pergunta_alternativas`
+--
+DROP TABLE IF EXISTS `v_pergunta_alternativas`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_pergunta_alternativas`  AS  select `q`.`cod_altenativa` AS `cod_altenativa`,`q`.`altenativa` AS `altenativa`,`q`.`img_representacao` AS `img_representacao`,`p`.`pergunta` AS `pergunta`,`p`.`cod_pergunta` AS `cod_pergunta` from (`tb_altenativa` `q` join `tb_pergunta` `p` on(`p`.`cod_pergunta` = `q`.`cod_pergunta_fk`)) ;
 
 --
 -- Índices para tabelas despejadas
@@ -227,7 +266,7 @@ ALTER TABLE `tb_pergunta`
 -- AUTO_INCREMENT de tabela `tb_sala`
 --
 ALTER TABLE `tb_sala`
-  MODIFY `cod_sala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `cod_sala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Restrições para despejos de tabelas
