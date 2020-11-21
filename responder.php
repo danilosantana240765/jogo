@@ -18,11 +18,13 @@ is_not_logado();
         <?php
             // Mostrando o status do jogo
             echo "<div id=\"informacao\">
-                    <span>Code: {$_SESSION['sala']} <span> | <span>Pontos: 10</span>
+                    <span>Code: {$_SESSION['sala']} <span> | <span id='tot_ponto'>Pontos: ". getPonto($conn) ."</span>
                 </div>";
             
             // Mostrando a lista de cartas
             echo ' <div id="game">';
+                echo "<div id='msg_resposta_ajax'></div>";
+                echo "<div id='load'></div>";
                 // Pegando o elemento passado pelo paramentro
                 $id = $_GET['cod_pergunta'] ?? null;
 
@@ -62,7 +64,8 @@ is_not_logado();
     <script src="js/script.js"></script>
     <script>
         if(altenativa != undefined)
-            loadFormQuestao(altenativa)
+            loadFormQuestao(altenativa);
+            checkResposta();
     </script>
     <footer>
         <p>Copyright &copy; - 2020. Danilo Santana & Jackson Silva</p>

@@ -18,7 +18,7 @@ is_not_logado();
         <?php
             // Mostrando o status do jogo
             echo "<div id=\"informacao\">
-                    <span>Code: {$_SESSION['sala']} <span> | <span>Pontos: 10</span>
+                    <span>Code: {$_SESSION['sala']} <span> | <span>Pontos: ". getPonto($conn) ."</span>
                 </div>";
             
             // Mostrando a lista de cartas

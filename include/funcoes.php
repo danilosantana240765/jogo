@@ -70,3 +70,40 @@ function getSucess($string){
     return "<p class='sucess'><span class='material-icons'>check_circle_outline</span> {$string}</p>";
 }
 // end --------------------------------
+
+
+// Funcao para verificar se as respostas foram respondida
+function isQuestaoRespondida($cod_questao):bool {
+    $is_encontrado = false;
+    $pos = 0;
+
+    if(isset($_SESSION['array_questao_respondida'])){
+
+        // Verificando se a questao foi respondida
+        while($pos < count($_SESSION['array_questao_respondida']) && !$is_encontrado){
+            if($_SESSION['array_questao_respondida'][$pos] == $cod_questao){
+                $is_encontrado = true;
+            }
+
+            $pos++;
+        }
+    }
+
+    return $is_encontrado;
+}
+
+
+/* Funcao para atualizar os pontos do usuário */
+function getPonto($conn){
+    $tot = 0;
+
+    $sql = "select tot_ponto from tb_jogador where cod_jogador = ". $_SESSION['cod_jogador'] . " LIMIT 1;";
+    $stmt = $conn->query($sql);
+
+    if($stmt && $stmt->num_rows > 0){
+        $row = $stmt->fetch_object();
+        $tot = $row->tot_ponto;
+    }
+
+    return $tot;
+}

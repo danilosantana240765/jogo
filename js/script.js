@@ -102,7 +102,7 @@ function loadFormQuestao(altenativas){
     // Criando o form
     let formAltenativa = document.createElement("form");
     formAltenativa.setAttribute("action", "#");
-    formAltenativa.setAttribute("method", "get");
+    formAltenativa.setAttribute("method", "GET");
     formAltenativa.setAttribute("id", "form_altenativa");
     div_game.appendChild(formAltenativa);
 
@@ -118,7 +118,11 @@ function loadFormQuestao(altenativas){
         input.setAttribute("name", "resposta");
         input.setAttribute("id", `ID${alt}`);
         input.setAttribute("value", altenativas[alt].cod_altenativa);
+        if(alt == 0){
+            input.setAttribute("checked", "");
+        }
         p.appendChild(input);
+        
 
         // Criando o label
         let label = document.createElement("label");
@@ -132,10 +136,75 @@ function loadFormQuestao(altenativas){
     // Colocando o botao de enviar
     let btn_submit = document.createElement("input");
     btn_submit.setAttribute("type", "submit");
+    btn_submit.setAttribute("id", "btn_submit");
     btn_submit.setAttribute("value", "Enviar");
     formAltenativa.appendChild(btn_submit);
 
-    console.log("ATENÇÂO!!!");
-    console.log("Não coloque nenhum script aqui, isso pode ser perigoso");
+    /*console.log("ATENÇÂO!!!");
+    console.log("Não coloque nenhum script aqui, isso pode ser perigoso");*/
+
+}
+
+/* Funcao para capturar responsta e enviar para o servidor */
+function checkResposta(){
+    let div_game = document.getElementById("game");
+    let input = document.getElementsByTagName("input");
+    let form = document.getElementById("form_altenativa");
+    let div_response = document.getElementById("msg_resposta_ajax");
+
+    let id_altenativa = -1; // Guarda o ID da altenativa selecionado pelo usuário
+
+    // Quando apertar no botao de enviar verificar o valor marcado e fazer requisição ajax
+    form.addEventListener("submit", function(event){
+        event.preventDefault(); // Não vai precisar atualizar a página
+
+        // Verificando o input que foi marcado
+        for(pos = 0; pos < input.length; pos++){
+            if(input[pos].getAttribute("type") == "radio" && input[pos].checked){
+                id_altenativa = input[pos].value;
+            }
+        }
+
+        // Pegando o elemento que mostra a tela de carregamento
+        let div_load = document.getElementById("load");
+
+        // Mandar a requisicao para verificar a resposta do usuário
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status == 200){
+                // Tirando a barra de carregamento
+                resul = JSON.parse(xhr.response)[0];
+               
+                // verificando o status do erro
+                if(resul.erro != undefined){
+                    div_response.innerHTML = resul.erro;
+                }else {
+                    
+                    div_response.setAttribute("class", "error");
+                    // Tratar o retorno do tipo de resposta
+                    if(resul.resposta != undefined && resul.resposta == "CERTA"){
+                        div_response.innerHTML = 'Parabéns! Você acertou!';
+                        div_response.setAttribute("class", "sucess");
+
+                        // Colocando o total de ponto acomulado pelo usuario
+                        if(resul.tot_ponto != undefined)
+                            document.getElementById("tot_ponto").innerHTML = `Pontos: ${resul.tot_ponto}`;
+                    }else if(resul.resposta != undefined && resul.resposta == "ERRADA"){
+                        div_response.innerHTML = 'Infelizmente você errou a questao!';
+                    }else {
+                        div_response.innerHTML = 'Você já respondeu essa questao!';
+                    }
+                }
+
+                div_load.style.display = 'none'; // Ocultando a tela de carregamento
+            }else {
+                div_load.style.display = 'block'; // Mostrando a tela de carregamento
+            }
+        }
+
+        let url = "requisicoes.php?type=vR&resposta=" +  id_altenativa;
+        xhr.open("GET", url, true);
+        xhr.send();
+    });
 
 }

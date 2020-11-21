@@ -14,6 +14,7 @@ if(!is_null($action)){
                 echo "Sala Fechada!";
                 unset($_SESSION['sala']);
                 unset($_SESSION['array_questao_sorteada']);
+                unset($_SESSION['array_questao_respondida']);
             }
         break;
         case "exit_user":
