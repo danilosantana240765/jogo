@@ -43,6 +43,10 @@ if(!is_null($code)){
                 // Sessao para salvar as perguntas já respondida
                 $_SESSION['array_questao_respondida'] = array();
 
+                // Colocando elemento de associação 
+                $sql = "call sp_associar_jogadores(". $_SESSION['cod_jogador'] .", $code)";
+                $conn->query($sql);
+
                 header("Location: game.php");
                 exit();
             }

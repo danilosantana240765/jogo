@@ -1,5 +1,6 @@
 let div_game = document.getElementById("game");
 let div_cards = document.getElementsByClassName("card");
+let div_cards_main = document.getElementsByClassName("card_main");
 let audio = document.getElementById("audio_fundo");
 let source;
 
@@ -22,31 +23,39 @@ function playAudio(){
 }
 
 // Verificando se essa tag foi carregado
-if(div_cards != null){
+if(div_cards_main != null){
     let show = Array();
-    for(let pos_card in div_cards){
-        div_cards[pos_card].onclick = function(){
+    for(let pos_card in div_cards_main){
+        div_cards_main[pos_card].onclick = function(){
             audioEfeito();
             show[pos_card] = !show[pos_card]
             if(questoes != null && show[pos_card]){
                 div_cards[pos_card].innerHTML = questoes[pos_card].pergunta;
-                div_cards[pos_card].style.backgroundImage = "url('imagens/lampada_acesa.png')";
-                div_cards[pos_card].style.backgroundColor = "#cecece";
-
+                div_cards_main[pos_card].style.backgroundImage = "url('imagens/lampada_acesa.png')";
+                div_cards_main[pos_card].style.backgroundColor = "#cecece";
                 // Colando elemento para responder a pergunta dentro da tag
                 let p = document.createElement("p");
-                div_cards[pos_card].appendChild(p);
+                div_cards_main[pos_card].appendChild(p);
 
                 // Colocando o botao de resposta dentro da tag P que acabou de ser criada
-                let btn = document.createElement("a");
-                btn.innerText = 'Responder';
-                btn.setAttribute("class", "btn_responder");
-                btn.setAttribute("href", `responder.php?cod_pergunta=${questoes[pos_card].cod_pergunta}`);
-                p.appendChild(btn);
+                if(!lockQuestao(pos_divs_respondidas, pos_card)){
+                    let btn = document.createElement("a");
+                    btn.innerText = 'Responder';
+                    btn.setAttribute("class", "btn_responder");
+                    btn.setAttribute("href", `responder.php?cod_pergunta=${questoes[pos_card].cod_pergunta}`);
+                    p.appendChild(btn);
+                }else {
+                    div_cards_main[pos_card].style.backgroundImage = "url('imagens/lampada-apagada.png')";
+                    div_cards[pos_card].innerHTML = "Carta " + (Number(pos_card) + (Number(1)));
+                }
             }else {
-                div_cards[pos_card].innerHTML = "Cartão " + (Number(pos_card) + (Number(1)));
-                div_cards[pos_card].style.backgroundImage = "url('imagens/lampada-apagada.png')";
-                div_cards[pos_card].style.backgroundColor = "#ffffff";
+                div_cards[pos_card].innerHTML = "Carta " + (Number(pos_card) + (Number(1)));
+                div_cards_main[pos_card].style.backgroundImage = "url('imagens/lampada-apagada.png')";
+                div_cards_main[pos_card].style.backgroundColor = "#ffffff";
+                if(lockQuestao(pos_divs_respondidas, pos_card)){
+                    div_cards_main[pos_card].style.backgroundColor = "#cecece";
+                }
+                div_cards_main[pos_card].removeChild(div_cards_main[pos_card].lastChild);
             }
             
         };
@@ -55,7 +64,27 @@ if(div_cards != null){
     }
 }
 
+// Funcao para travar as divs que já foram respondidas
+function lockQuestao(array_pos = Array(), busca){
+    let pos = 0;
+    let is_encontrado = false;
+    while(pos < array_pos.length && !is_encontrado){
+        if(array_pos[pos] == busca)
+            is_encontrado = !is_encontrado;
+        pos++;
+    }
 
+    return is_encontrado;
+}
+
+// Funcao para travar as divs que já foram respondidas
+function lockQuestaoEstaticamente(array_pos = Array()){
+    let pos = 0;
+    let div_cards_main = document.getElementsByClassName("card_main");
+    for(pos in array_pos){
+        div_cards_main[array_pos[pos]].style.backgroundColor = '#cecece';
+    }
+}
 
 // Funcao que criar a reprodução do audio
 function audioEfeito(){

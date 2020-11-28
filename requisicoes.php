@@ -34,12 +34,16 @@ if(!is_null($type)){
                     $row = $stmt->fetch_assoc();
                     $is_respondida = isQuestaoRespondida($row['cod_pergunta_fk']); // Verificando na sessao se a questao foi respondida
 
-                    // Somando o total de acerto do jogador
-                    $sql = "call sp_acumular_ponto(10, ". $_SESSION['cod_jogador'] .")";
-                    $stmt = $conn->query($sql);
-                    $row_jogador = $stmt->fetch_assoc();
+                    
 
                     if($row["is_correta"] == "1" && !$is_respondida){
+
+                        // Somando o total de acerto do jogador
+                        $sql = "call sp_acumular_ponto(10, ". $_SESSION['cod_jogador'] .")";
+                        $stmt = $conn->query($sql);
+                        $row_jogador = $stmt->fetch_assoc();
+
+                        // Adicionando dentro dos acerto
                         array_push($msg_json, array(
                             "resposta" => "CERTA",
                             "tot_ponto" => $row_jogador['tot_ponto']

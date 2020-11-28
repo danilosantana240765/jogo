@@ -23,10 +23,18 @@ is_not_logado();
             
             // Mostrando a lista de cartas
             echo ' <div id="game"><div id="card_list">';
-            echo "<script> let questoes = ".json_encode($_SESSION['array_questao_sorteada']) . "</script>";
+
+                $pos_questao_respondida = array();
                 // Mostrando as perguntas
                 for($i = 0; $i < count($_SESSION['array_questao_sorteada']); $i++){
-                    echo "<div id=\"card{$i}\" class=\"card\">Carta ". ($i + 1) ."</div>";
+
+                    // Verificando as questões que foram respondida
+
+                    if(isQuestaoRespondida($_SESSION['array_questao_sorteada'][$i]['cod_pergunta'])){
+                        array_push($pos_questao_respondida, $i);
+                    }
+                
+                    echo "<div id=\"card{$i}\" class='card_main'><div class=\"card\">Carta ". ($i + 1) ."</div></div>";
                 }
             echo '</div></div>';
             
@@ -37,8 +45,23 @@ is_not_logado();
 
         <div id="load_efeito"></div>
         <a id="exit" class="botao botao_exit" href="logout.php?action=exit_game">Sair</a>
+        <?php
+            if(count($_SESSION['array_questao_sorteada']) == count($_SESSION['array_questao_respondida'])){
+                echo '<a id="exit" class="botao" href="ranking.php?sala=' .$_SESSION['sala'] . '">Ver Ranking</a>';
+            }
+        ?>
     </main>
+
+    <?php 
+        echo "<script>";
+        echo "let questoes = ".json_encode($_SESSION['array_questao_sorteada']);
+        echo "\nvar pos_divs_respondidas = " . json_encode($pos_questao_respondida);
+        echo "</script>"; 
+    ?>
     <script src="js/script.js"></script>
+    <script>
+        lockQuestaoEstaticamente(pos_divs_respondidas);
+    </script>
     <footer>
         <p>Copyright &copy; - 2020. Danilo Santana & Jackson Silva</p>
     </footer>

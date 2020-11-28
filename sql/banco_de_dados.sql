@@ -20,14 +20,13 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `cardroom`
 --
-CREATE DATABASE IF NOT EXISTS `cardroom` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `cardroom`;
+
 
 DELIMITER $$
 --
 -- Procedimentos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_acumular_ponto` (`tot` INT, `id` INT)  begin
+CREATE PROCEDURE `sp_acumular_ponto` (`tot` INT, `id` INT)  begin
 	update tb_jogador set tot_ponto = tot_ponto + tot where cod_jogador = id;
     select tot_ponto from tb_jogador where cod_jogador = id;
 end$$
@@ -176,7 +175,7 @@ CREATE TABLE `v_pergunta_alternativas` (
 --
 DROP TABLE IF EXISTS `v_pergunta_alternativas`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_pergunta_alternativas`  AS  select `q`.`cod_altenativa` AS `cod_altenativa`,`q`.`altenativa` AS `altenativa`,`q`.`img_representacao` AS `img_representacao`,`p`.`pergunta` AS `pergunta`,`p`.`cod_pergunta` AS `cod_pergunta` from (`tb_altenativa` `q` join `tb_pergunta` `p` on(`p`.`cod_pergunta` = `q`.`cod_pergunta_fk`)) ;
+CREATE ALGORITHM=UNDEFINED  SQL SECURITY DEFINER VIEW `v_pergunta_alternativas`  AS  select `q`.`cod_altenativa` AS `cod_altenativa`,`q`.`altenativa` AS `altenativa`,`q`.`img_representacao` AS `img_representacao`,`p`.`pergunta` AS `pergunta`,`p`.`cod_pergunta` AS `cod_pergunta` from (`tb_altenativa` `q` join `tb_pergunta` `p` on(`p`.`cod_pergunta` = `q`.`cod_pergunta_fk`)) ;
 
 --
 -- Índices para tabelas despejadas
@@ -276,26 +275,26 @@ ALTER TABLE `tb_sala`
 -- Limitadores para a tabela `tb_altenativa`
 --
 ALTER TABLE `tb_altenativa`
-  ADD CONSTRAINT `tb_altenativa_ibfk_1` FOREIGN KEY (`cod_pergunta_fk`) REFERENCES `tb_pergunta` (`cod_pergunta`) ON DELETE CASCADE;
+  ADD  FOREIGN KEY (`cod_pergunta_fk`) REFERENCES `tb_pergunta` (`cod_pergunta`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_area`
 --
 ALTER TABLE `tb_area`
-  ADD CONSTRAINT `tb_area_ibfk_1` FOREIGN KEY (`cod_usuario_fk1`) REFERENCES `tb_jogador` (`cod_jogador`) ON DELETE CASCADE,
-  ADD CONSTRAINT `tb_area_ibfk_2` FOREIGN KEY (`cod_usuario_fk2`) REFERENCES `tb_jogador` (`cod_jogador`) ON DELETE CASCADE;
+  ADD  FOREIGN KEY (`cod_usuario_fk1`) REFERENCES `tb_jogador` (`cod_jogador`) ON DELETE CASCADE,
+  ADD FOREIGN KEY (`cod_usuario_fk2`) REFERENCES `tb_jogador` (`cod_jogador`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_pergunta`
 --
 ALTER TABLE `tb_pergunta`
-  ADD CONSTRAINT `tb_pergunta_ibfk_1` FOREIGN KEY (`cod_disc_fk`) REFERENCES `tb_disciplina` (`cod_disc`) ON DELETE CASCADE;
+  ADD  FOREIGN KEY (`cod_disc_fk`) REFERENCES `tb_disciplina` (`cod_disc`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_sala`
 --
 ALTER TABLE `tb_sala`
-  ADD CONSTRAINT `tb_sala_ibfk_1` FOREIGN KEY (`cod_jogador_fk`) REFERENCES `tb_jogador` (`cod_jogador`) ON DELETE CASCADE;
+  ADD FOREIGN KEY (`cod_jogador_fk`) REFERENCES `tb_jogador` (`cod_jogador`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
