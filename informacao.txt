@@ -1,0 +1,4 @@
+login: danilosantana
+senha: 1234567
+
+Basta fazer o backup do banco de dados que esta na pasta "sql"

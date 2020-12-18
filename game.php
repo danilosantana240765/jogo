@@ -46,9 +46,9 @@ is_not_logado();
         <div id="load_efeito"></div>
         <a id="exit" class="botao botao_exit" href="logout.php?action=exit_game">Sair</a>
         <?php
-            if(count($_SESSION['array_questao_sorteada']) == count($_SESSION['array_questao_respondida'])){
+            /*if(count($_SESSION['array_questao_sorteada']) == count($_SESSION['array_questao_respondida'])){
                 echo '<a id="exit" class="botao" href="ranking.php?sala=' .$_SESSION['sala'] . '">Ver Ranking</a>';
-            }
+            }*/
         ?>
     </main>
 

@@ -2,7 +2,6 @@
 require_once("config.php");
 require_once("include".DIRECTORY_SEPARATOR."funcoes.php");
 
-
 // Recebendo os paramentros da url
 $code = $_GET['code'] ?? null;
 
